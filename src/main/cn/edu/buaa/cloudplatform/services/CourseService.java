@@ -34,4 +34,8 @@ public class CourseService {
     public boolean isCourseExists(String id){
         return courses.containsKey(id);
     }
+
+    public Map<String, Course> getAllCourses(){
+        return courses;
+    }
 }
