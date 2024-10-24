@@ -8,6 +8,16 @@ import java.util.Map;
 public class CourseService {
     private Map<String, Course> courses = new HashMap<>();
     private int courseCount = 1;
+    private static CourseService instance;
+
+    private CourseService(){}
+
+    public static CourseService getInstance(){
+        if (instance == null) {
+            instance = new CourseService();
+        }
+        return instance;
+    }
 
     public String createCourse(String courseName, String courseTime, double credits, int period,
                                String teacherId){
