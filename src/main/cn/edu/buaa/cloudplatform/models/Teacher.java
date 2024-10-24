@@ -20,6 +20,10 @@ public class Teacher extends User{
         courses.add(courseId);
     }
 
+    public void removeCourse(String courseId) {
+        courses.remove(courseId);
+    }
+
     public boolean hasCourseWithName(String courseName){
         CourseService courseService = CourseService.getInstance();
         for (String courseId : courses) {

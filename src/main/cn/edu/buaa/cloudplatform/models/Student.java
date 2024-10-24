@@ -20,6 +20,10 @@ public class Student extends User {
         courses.add(courseId);
     }
 
+    public void removeCourse(String courseId) {
+        courses.remove(courseId);
+    }
+
     public boolean hasCourseTimeConflict(String courseTime) {
         CourseService courseService = CourseService.getInstance();
         for (String courseId : courses) {

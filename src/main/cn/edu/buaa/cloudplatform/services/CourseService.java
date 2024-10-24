@@ -38,4 +38,8 @@ public class CourseService {
     public Map<String, Course> getAllCourses(){
         return courses;
     }
+
+    public void cancelCourse(String courseId) {
+        courses.remove(courseId);
+    }
 }
