@@ -5,12 +5,12 @@ import main.cn.edu.buaa.cloudplatform.services.AuthService;
 import main.cn.edu.buaa.cloudplatform.services.CourseService;
 import main.cn.edu.buaa.cloudplatform.services.UserService;
 
-public class CancleCourse implements Command{
+public class CancelCourseCommand implements Command{
     private AuthService authService;
     private UserService userService;
     private CourseService courseService;
 
-    public CancleCourse(AuthService authService, UserService userService, CourseService courseService){
+    public CancelCourseCommand(AuthService authService, UserService userService, CourseService courseService){
         this.authService = authService;
         this.courseService = courseService;
         this.userService = userService;
