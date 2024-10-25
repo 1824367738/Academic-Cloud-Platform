@@ -101,6 +101,14 @@ public class CreateCourseCommand implements Command {
     }
 
     private boolean isValidCourseTime(String courseTime) {
-        return courseTime.matches("^[1-7]_[1-9]|1[0-4]-[1-9]|1[0-4]$");
+        if (!courseTime.matches("^[1-7]_([1-9]|1[0-4])-([1-9]|1[0-4])$")) {
+            return false;
+        }
+
+        String[] parts = courseTime.split("[-_]");
+        int startTime = Integer.parseInt(parts[1]);
+        int endTime = Integer.parseInt(parts[2]);
+
+        return startTime <= endTime;
     }
 }
