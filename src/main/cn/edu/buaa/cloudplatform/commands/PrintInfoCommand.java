@@ -4,6 +4,7 @@ import main.cn.edu.buaa.cloudplatform.models.Administrator;
 import main.cn.edu.buaa.cloudplatform.models.User;
 import main.cn.edu.buaa.cloudplatform.services.AuthService;
 import main.cn.edu.buaa.cloudplatform.services.UserService;
+import main.cn.edu.buaa.cloudplatform.utils.IdValidator;
 
 public class PrintInfoCommand implements Command{
     private AuthService authService;
@@ -38,6 +39,12 @@ public class PrintInfoCommand implements Command{
                 System.out.println("Permission denied");
                 return;
             }
+
+            if(!IdValidator.isValidStudentId(userId) && !IdValidator.isValidAdminId(userId) && !IdValidator.isValidTeacherId(userId)){
+                System.out.println("Illegal user id");
+                return;
+            }
+
             User user = userService.getUserById(userId);
             if (user == null) {
                 System.out.println("User does not exist");
