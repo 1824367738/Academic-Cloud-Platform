@@ -33,6 +33,11 @@ public class RegisterCommand implements Command{
             return;
         }
 
+        if(userService.userExist(id)){
+            System.out.println("User id exists");
+            return;
+        }
+
         if(!InputValidator.isValidName(name)){
             System.out.println("Illegal user name");
             return;
@@ -49,14 +54,14 @@ public class RegisterCommand implements Command{
         }
 
         User user;
-        switch (identity.toLowerCase()){
-            case "student":
+        switch (identity){
+            case "Student":
                 user = new Student(id, name, password);
                 break;
-            case  "teacher":
+            case  "Teacher":
                 user = new Teacher(id, name, password);
                 break;
-            case "administrator":
+            case "Administrator":
                 user = new Administrator(id, name, password);
                 break;
             default:
@@ -66,8 +71,6 @@ public class RegisterCommand implements Command{
 
         if(userService.registerUser(user)){
             System.out.println("Register success");
-        }else {
-            System.out.println("User id exists");
         }
     }
 }

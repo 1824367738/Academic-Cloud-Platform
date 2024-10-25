@@ -15,11 +15,12 @@ public class UserService {
      * @return 注册是否成功
      */
     public boolean registerUser(User user){
-        if(users.containsKey(user.getId())){
-            return false;
-        }
         users.put(user.getId(), user);
         return true;
+    }
+
+    public boolean userExist(String userId){
+        return users.containsKey(userId);
     }
 
     /**
