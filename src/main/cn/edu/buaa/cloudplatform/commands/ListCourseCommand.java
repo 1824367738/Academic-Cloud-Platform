@@ -7,10 +7,11 @@ import main.cn.edu.buaa.cloudplatform.models.User;
 import main.cn.edu.buaa.cloudplatform.services.AuthService;
 import main.cn.edu.buaa.cloudplatform.services.CourseService;
 import main.cn.edu.buaa.cloudplatform.services.UserService;
+import main.cn.edu.buaa.cloudplatform.utils.IdValidator;
 
 import java.util.*;
 
-public class ListCourseCommand implements Command{
+public class ListCourseCommand implements Command {
     private CourseService courseService;
     private AuthService authService;
     private UserService userService;
@@ -49,6 +50,12 @@ public class ListCourseCommand implements Command{
             }
 
             String teacherId = args[0];
+
+            if (!IdValidator.isValidTeacherId(teacherId)) {
+                System.out.println("Illegal user id");
+                return;
+            }
+
             if (!userService.isUserRegistered(teacherId)) {
                 System.out.println("User does not exist");
                 return;
@@ -94,7 +101,7 @@ public class ListCourseCommand implements Command{
         List<Course> courses = new ArrayList<>(allCourses.values());
         courses.sort(Comparator.comparing(Course::getCourseId));
 
-        Map<String, List<Course>> coursesByTeacher = new TreeMap<>();
+        Map<String, List<Course>> coursesByTeacher = new TreeMap<>(Comparator.comparing(teacherId -> userService.getUserById(teacherId).getName()));
         for (Course course : courses) {
             coursesByTeacher.computeIfAbsent(course.getTeacherId(), k -> new ArrayList<>()).add(course);
         }
