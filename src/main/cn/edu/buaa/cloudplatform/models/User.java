@@ -4,11 +4,13 @@ public class User {
     protected String id;
     protected String name;
     protected String password;
+    protected String identity;
 
-    public User(String id, String name, String password){
+    public User(String id, String name, String password, String identity){
         this.id = id;
         this.name = name;
         this.password = password;
+        this.identity = identity;
     }
 
     public String getId() {
@@ -21,6 +23,10 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getIdentity(){
+        return identity;
     }
 
     @Override

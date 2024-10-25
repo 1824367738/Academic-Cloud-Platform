@@ -19,7 +19,7 @@ public class Test {
         commandParser.registerCommand("quit", new QuitCommand(authService));
         commandParser.registerCommand("register", new RegisterCommand(userService));
         commandParser.registerCommand("login", new LoginCommand(userService, authService));
-        commandParser.registerCommand("logout", new LogoutCommand(authService));
+        commandParser.registerCommand("logout", new LogoutCommand(authService, userService));
         commandParser.registerCommand("printInfo", new PrintInfoCommand(authService, userService));
         commandParser.registerCommand("createCourse", new CreateCourseCommand(courseService, authService, userService));
         commandParser.registerCommand("listCourse", new ListCourseCommand(courseService, authService, userService));

@@ -9,7 +9,7 @@ public class Teacher extends User{
     private Set<String>courses = new HashSet<>();
 
     public Teacher(String id, String name, String password){
-        super(id, name, password);
+        super(id, name, password, "Teacher");
     }
 
     public Set<String> getCourses(){
