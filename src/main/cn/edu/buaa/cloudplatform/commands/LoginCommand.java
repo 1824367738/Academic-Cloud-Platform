@@ -3,6 +3,7 @@ package main.cn.edu.buaa.cloudplatform.commands;
 import main.cn.edu.buaa.cloudplatform.models.User;
 import main.cn.edu.buaa.cloudplatform.services.AuthService;
 import main.cn.edu.buaa.cloudplatform.services.UserService;
+import main.cn.edu.buaa.cloudplatform.utils.IdValidator;
 
 public class LoginCommand implements Command{
     private UserService userService;
@@ -22,6 +23,11 @@ public class LoginCommand implements Command{
 
         String id = args[0];
         String password = args[1];
+
+        if(!IdValidator.isValidStudentId(id) && !IdValidator.isValidAdminId(id) && !IdValidator.isValidTeacherId(id)){
+            System.out.println("Illegal user id");
+            return;
+        }
 
         if (!userService.isUserRegistered(id)) {
             System.out.println("User does not exist");
