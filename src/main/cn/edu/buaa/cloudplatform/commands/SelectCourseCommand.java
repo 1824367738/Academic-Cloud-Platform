@@ -44,6 +44,12 @@ public class SelectCourseCommand implements Command{
             return;
         }
 
+        int courseNumber = Integer.parseInt(courseId.substring(2));
+        if (courseNumber <= 0) {
+            System.out.println("Illegal course id");
+            return;
+        }
+
         Course course = courseService.getCourseById(courseId);
         if (course == null) {
             System.out.println("Course does not exist");
