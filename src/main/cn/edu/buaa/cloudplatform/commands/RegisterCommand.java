@@ -28,7 +28,7 @@ public class RegisterCommand implements Command{
         String confirmPassword = args[3];
         String identity = args[4];
 
-        if(!IdValidator.isValidStudentId(id) && !IdValidator.isValidAdminId(id) && IdValidator.isValidTeacherId(id)){
+        if(!IdValidator.isValidStudentId(id) && !IdValidator.isValidAdminId(id) && !IdValidator.isValidTeacherId(id)){
             System.out.println("Illegal user id");
             return;
         }
