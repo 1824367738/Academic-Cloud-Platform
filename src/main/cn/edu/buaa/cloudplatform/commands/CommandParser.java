@@ -6,13 +6,34 @@ import java.util.Map;
 public class CommandParser {
     private Map<String, Command> commands = new HashMap<>();
 
-    public void registerCommand(String commandName, Command command){
+    /**
+     * 注册命令
+     * @param commandName 命令名称
+     * @param command 命令类实例
+     */
+    public void registerCommand(String commandName, Command command) {
         commands.put(commandName, command);
     }
 
-    public void parseAndExecute(String input){
-        //去除首尾空白字符，按照空白字符分割字符串
-        String[] parts = input.trim().split("\\s+");
+    /**
+     * 解析并执行命令
+     * @param input 用户输入的命令字符串
+     */
+    public void parseAndExecute(String input) {
+        // 去除首尾空白字符
+        input = input.trim();
+
+        // 检查输入是否为空
+        if (input.isEmpty()) {
+            return; // 如果输入为空，直接返回，不执行任何命令
+        }
+
+        // 按空白字符分割输入字符串
+        String[] parts = input.split("\\s+");
+        if (parts.length == 0) {
+            System.out.println("No command entered");
+            return;
+        }
 
         // 提取命令名称
         String commandName = parts[0];
