@@ -67,7 +67,7 @@ public class ListCourseCommand implements Command {
                 return;
             }
 
-            listTeacherCourses((Teacher) user);
+            adminListTeacherCourses((Teacher) user);
         }
     }
 
@@ -86,10 +86,33 @@ public class ListCourseCommand implements Command {
             }
         }
 
-        courses.sort(Comparator.comparing(Course::getCourseId));
+        courses.sort(Comparator.comparingInt(course -> Integer.parseInt(course.getCourseId().split("-")[1])));
 
         for (Course course : courses) {
             System.out.println(course.getCourseId() + " " + course.getCourseName() + " " + course.getCourseTime() + " " + String.format("%.1f", course.getCredits()) + " " + course.getPeriod());
+        }
+        System.out.println("List course success");
+    }
+
+    private void adminListTeacherCourses(Teacher teacher) {
+        Set<String> courseIds = teacher.getCourses();
+        if (courseIds.isEmpty()) {
+            System.out.println("Course does not exist");
+            return;
+        }
+
+        List<Course> courses = new ArrayList<>();
+        for (String courseId : courseIds) {
+            Course course = courseService.getCourseById(courseId);
+            if (course != null) {
+                courses.add(course);
+            }
+        }
+
+        courses.sort(Comparator.comparingInt(course -> Integer.parseInt(course.getCourseId().split("-")[1])));
+
+        for (Course course : courses) {
+            System.out.println(teacher.getName() + " " + course.getCourseId() + " " + course.getCourseName() + " " + course.getCourseTime() + " " + String.format("%.1f", course.getCredits()) + " " + course.getPeriod());
         }
         System.out.println("List course success");
     }
@@ -102,7 +125,7 @@ public class ListCourseCommand implements Command {
         }
 
         List<Course> courses = new ArrayList<>(allCourses.values());
-        courses.sort(Comparator.comparing(Course::getCourseId));
+        courses.sort(Comparator.comparingInt(course -> Integer.parseInt(course.getCourseId().split("-")[1])));
 
         Map<String, List<Course>> coursesByTeacher = new TreeMap<>(Comparator.comparing(teacherId -> {
             User user = userService.getUserById(teacherId);
