@@ -51,7 +51,7 @@ public class ListCourseCommand implements Command {
 
             String teacherId = args[0];
 
-            if (!IdValidator.isValidTeacherId(teacherId)) {
+            if (!IdValidator.isValidTeacherId(teacherId) && !IdValidator.isValidStudentId(teacherId) && !IdValidator.isValidAdminId(teacherId)) {
                 System.out.println("Illegal user id");
                 return;
             }
@@ -80,7 +80,10 @@ public class ListCourseCommand implements Command {
 
         List<Course> courses = new ArrayList<>();
         for (String courseId : courseIds) {
-            courses.add(courseService.getCourseById(courseId));
+            Course course = courseService.getCourseById(courseId);
+            if (course != null) {
+                courses.add(course);
+            }
         }
 
         courses.sort(Comparator.comparing(Course::getCourseId));
@@ -101,7 +104,11 @@ public class ListCourseCommand implements Command {
         List<Course> courses = new ArrayList<>(allCourses.values());
         courses.sort(Comparator.comparing(Course::getCourseId));
 
-        Map<String, List<Course>> coursesByTeacher = new TreeMap<>(Comparator.comparing(teacherId -> userService.getUserById(teacherId).getName()));
+        Map<String, List<Course>> coursesByTeacher = new TreeMap<>(Comparator.comparing(teacherId -> {
+            User user = userService.getUserById(teacherId);
+            return user != null ? user.getName() : "";
+        }));
+
         for (Course course : courses) {
             coursesByTeacher.computeIfAbsent(course.getTeacherId(), k -> new ArrayList<>()).add(course);
         }

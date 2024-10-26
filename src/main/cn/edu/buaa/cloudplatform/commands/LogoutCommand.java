@@ -22,11 +22,12 @@ public class LogoutCommand implements Command{
             return;
         }
 
+        if (!authService.isUserLoggedIn()) {
+            System.out.println("No one is online");
+            return;
+        }
+
         if (args.length == 0) {
-            if (!authService.isUserLoggedIn()) {
-                System.out.println("No one is online");
-                return;
-            }
             String currentUserId = authService.getCurrentUserId();
             authService.logoutUser(currentUserId);
             System.out.println(currentUserId + " Bye~");
